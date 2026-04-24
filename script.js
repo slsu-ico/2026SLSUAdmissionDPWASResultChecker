@@ -82,16 +82,29 @@ function formatDateString(value) {
 }
 
 function formatTimeString(value) {
-  var text = String(value || '').trim();
+  var rawText = String(value || '').trim();
+  var text = rawText.split(',')[0].trim();
+
+  function normalizeSuffix(suffix) {
+    var token = String(suffix || '').toUpperCase();
+    if (token === 'NN' || token === 'NOON') return 'PM';
+    if (token === 'MN' || token === 'MIDNIGHT') return 'AM';
+    return token;
+  }
 
   function formatSingleTime(input) {
-    var t = String(input || '').trim().replace(/^from\s+/i, '');
-    var match = t.match(/^(\d{1,2})(?::(\d{2}))?\s*([AaPp][Mm])$/);
+    var t = String(input || '')
+      .trim()
+      .replace(/^from\s+/i, '')
+      .replace(/[.,;:]+$/g, '');
+
+    var match = t.match(/^(\d{1,2})(?::(\d{2}))?\s*(AM|PM|NN|MN|NOON|MIDNIGHT)$/i);
     if (!match) return '';
     var hour = parseInt(match[1], 10);
     var minute = match[2] || '00';
-    var period = match[3].toUpperCase();
+    var period = normalizeSuffix(match[3]);
     if (hour === 0) hour = 12;
+    if (hour > 12) return '';
     return (hour < 10 ? '0' : '') + hour + ':' + minute + ' ' + period;
   }
 
@@ -109,7 +122,7 @@ function formatTimeString(value) {
     return single;
   }
 
-  return text;
+  return rawText;
 }
 
 async function checkResult() {
