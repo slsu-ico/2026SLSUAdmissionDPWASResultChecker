@@ -99,14 +99,14 @@ async function checkResult() {
       resultEl.innerHTML =
         '<div class="result-box result-fail">' +
           '<div class="res-header">' +
-            '<div class="res-icon icon-fail">&#10069;</div>' +
+            '<div class="res-icon icon-fail">&#10675;</div>' +
             '<div class="res-header-text">' +
               '<div class="res-tag res-tag-fail">NOT ON DPWAS LIST</div>' +
             '</div>' +
           '</div>' +
           '<div class="res-divider-red"></div>' +
           '<p class="advisory-text">Not on DPWAS List</p>' +
-          '<p class="advisory-text">Wait for the further announcement for reconsideration. You may visit the SLSU Main FB Page or SLSU Student Admission Office FB Page</p>' +
+          '<p class="advisory-text">Wait for the further announcement for reconsideration. You may visit the <a href="https://www.facebook.com/slsuMain" target="_blank" class="fb-link">SLSU Main FB Page</a> or <a href="https://www.facebook.com/SLSUAdmission" target="_blank" class="fb-link">SLSU Student Admission Office FB Page</a></p>' +
         '</div>';
     }
   } catch (err) {
