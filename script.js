@@ -1,9 +1,49 @@
+function getApiBaseUrl() {
+  var fromWindow = window.APP_CONFIG && typeof window.APP_CONFIG.apiBaseUrl === 'string'
+    ? window.APP_CONFIG.apiBaseUrl.trim()
+    : '';
+  var fromMeta = (function() {
+    var tag = document.querySelector('meta[name="api-base-url"]');
+    return tag ? String(tag.getAttribute('content') || '').trim() : '';
+  })();
+  var base = fromWindow || fromMeta || '';
+  return base.replace(/\/+$/, '');
+}
+
+function buildApiUrl(path, queryParams) {
+  var normalizedPath = String(path || '').replace(/^\/+/, '');
+  var url = (getApiBaseUrl() ? getApiBaseUrl() + '/' : '/') + normalizedPath;
+  if (queryParams && typeof queryParams === 'object') {
+    var search = new URLSearchParams();
+    Object.keys(queryParams).forEach(function(key) {
+      var value = queryParams[key];
+      if (value !== undefined && value !== null && String(value).trim() !== '') {
+        search.set(key, String(value));
+      }
+    });
+    if (search.toString()) {
+      url += '?' + search.toString();
+    }
+  }
+  return url;
+}
+
+async function parseJsonResponse(response) {
+  var payload = null;
+  try {
+    payload = await response.json();
+  } catch (e) {
+    payload = {};
+  }
+  return payload;
+}
+
 async function loadAllData() {
   var statusEl = document.getElementById('dataStatus');
   statusEl.innerHTML = '<div class="loading-bar"><div class="spinner"></div>Preparing secure DPWAS qualifier lookup&hellip;</div>';
   try {
-    var res = await fetch('/api/search-result', { cache: 'no-store' });
-    var payload = await res.json();
+    var res = await fetch(buildApiUrl('/api/search-result'), { cache: 'no-store' });
+    var payload = await parseJsonResponse(res);
     if (!res.ok || !payload.ready) {
       throw new Error(payload && payload.error ? payload.error : 'Secure lookup is not available.');
     }
@@ -71,10 +111,10 @@ async function checkResult() {
   buttonEl.textContent = 'Checking...';
 
   try {
-    var response = await fetch('/api/search-result?q=' + encodeURIComponent(lookupKey), {
+    var response = await fetch(buildApiUrl('/api/search-result', { q: lookupKey }), {
       cache: 'no-store'
     });
-    var payload = await response.json();
+    var payload = await parseJsonResponse(response);
 
     if (!response.ok) {
       throw new Error(payload && payload.error ? payload.error : 'Lookup failed.');
@@ -82,9 +122,9 @@ async function checkResult() {
 
     if (payload.found) {
       if (payload.type === 'dpwas') {
-        var displayDate = formatDateString(payload.date);
-        var displayTime = formatTimeString(payload.time);
-        var scheduleLabel = displayDate && displayTime
+        var displayDate = formatDateString(payload.date) || 'To be announced';
+        var displayTime = formatTimeString(payload.time) || 'To be announced';
+        var scheduleLabel = payload.date && payload.time
           ? displayDate + ', from ' + displayTime
           : 'your assigned schedule';
         resultEl.innerHTML =
@@ -109,6 +149,7 @@ async function checkResult() {
             '<p class="screenshot-note">Screenshot this as proof of your schedule.</p>' +
           '</div>';
       } else if (payload.type === 'first_release') {
+        var displayProgram = String(payload.program || '').trim() || 'To be announced';
         resultEl.innerHTML =
           '<div class="result-box result-info">' +
             '<div class="res-header">' +
@@ -120,7 +161,7 @@ async function checkResult() {
             '</div>' +
             '<div class="res-divider"></div>' +
             '<div class="res-row"><div class="res-label res-label-info">App. No.</div><div class="res-val">' + displayKey + '</div></div>' +
-            '<div class="res-row"><div class="res-label res-label-info">1st Choice Program</div><div class="res-val program program-info">' + payload.program + '</div></div>' +
+            '<div class="res-row"><div class="res-label res-label-info">1st Choice Program</div><div class="res-val program program-info">' + escapeHtml(displayProgram) + '</div></div>' +
             '<div class="congrats-note congrats-note-info">' +
               'You are already in the First admission results and qualified for your 1st choice of Program.' +
             '</div>' +
