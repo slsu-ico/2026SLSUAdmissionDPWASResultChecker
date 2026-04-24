@@ -130,7 +130,6 @@ async function checkResult() {
             '</div>' +
           '</div>' +
           '<div class="res-divider-warning"></div>' +
-          '<p class="advisory-text">Not on DPWAS List</p>' +
           '<p class="advisory-text">Wait for the further announcement for reconsideration. You may visit the <a href="https://www.facebook.com/slsuMain" target="_blank" rel="noopener noreferrer" class="fb-link">SLSU Main FB Page</a> or <a href="https://www.facebook.com/SLSUAdmission" target="_blank" rel="noopener noreferrer" class="fb-link">SLSU Student Admission Office FB Page</a></p>' +
         '</div>';
     }
