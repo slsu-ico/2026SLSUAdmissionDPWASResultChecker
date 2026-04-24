@@ -4,5 +4,5 @@
 *.csv
 *.xlsx
 
-# Ignore local secure data files from other apps
-api/data.secure.json
+# Do not track old first-release secure data file
+api/first_release.secure.json

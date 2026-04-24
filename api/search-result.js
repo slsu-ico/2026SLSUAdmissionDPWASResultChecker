@@ -2,7 +2,7 @@ var fs = require('fs');
 var path = require('path');
 var crypto = require('crypto');
 
-var FIRST_RELEASE_FILE = path.join(process.cwd(), 'api', 'first_release.secure.json');
+var FIRST_RELEASE_FILE = path.join(process.cwd(), 'api', 'data.secure.json');
 var DPWAS_FILE = path.join(process.cwd(), 'api', 'dpwas.secure.json');
 
 function getEnv(name) {
