@@ -195,6 +195,25 @@ ol.sub-reminder-list { list-style: lower-alpha; }
 .req-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
 .req-item { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: #333; line-height: 1.5; }
 .req-item::before { content: '✓'; color: var(--green); font-weight: 700; font-size: 13px; flex-shrink: 0; }
+.req-section + .req-section { margin-top: 12px; }
+.req-heading {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  color: var(--green-dark);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+.req-list {
+  margin: 0;
+  padding-left: 1.15rem;
+}
+.req-list li {
+  font-size: 13.4px;
+  color: #2f2f2f;
+  line-height: 1.62;
+  padding: 3px 0;
+}
 .req-link-card {
   margin-top: 14px;
   padding: 10px 12px;
