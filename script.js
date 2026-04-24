@@ -163,8 +163,7 @@ async function checkResult() {
             '<div class="res-header">' +
               '<div class="res-icon icon-success">&#127881;</div>' +
               '<div class="res-header-text">' +
-                '<div class="res-tag">&#10003; DPWAS</div>' +
-                '<h3>Thank you!</h3>' +
+                '<h3>DPWAS Eligible</h3>' +
               '</div>' +
             '</div>' +
             '<div class="res-divider"></div>' +
