@@ -3,3 +3,6 @@
 # Local data sources should not be uploaded to GitHub
 *.csv
 *.xlsx
+
+# Ignore local secure data files from other apps
+api/data.secure.json
