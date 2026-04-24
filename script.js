@@ -31,6 +31,29 @@ function normalizeAppNo(value) {
     .replace(/[^A-Z0-9]/g, '');
 }
 
+function formatDateString(value) {
+  var text = String(value || '').trim();
+  if (!text) return text;
+  var parsed = new Date(text);
+  if (!isNaN(parsed.getTime())) {
+    return parsed.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  }
+  return text;
+}
+
+function formatTimeString(value) {
+  var text = String(value || '').trim();
+  var match = text.match(/^(\d{1,2}):(\d{2})\s*([AaPp][Mm])$/);
+  if (match) {
+    var hour = parseInt(match[1], 10);
+    var minute = match[2];
+    var period = match[3].toUpperCase();
+    if (hour === 0) hour = 12;
+    return (hour < 10 ? '0' : '') + hour + ':' + minute + ' ' + period;
+  }
+  return text;
+}
+
 async function checkResult() {
   var raw = document.getElementById('appInput').value.trim();
   var resultEl = document.getElementById('result');
@@ -59,6 +82,8 @@ async function checkResult() {
 
     if (payload.found) {
       if (payload.type === 'dpwas') {
+        var displayDate = formatDateString(payload.date);
+        var displayTime = formatTimeString(payload.time);
         resultEl.innerHTML =
           '<div class="result-box result-success">' +
             '<div class="res-header">' +
@@ -70,8 +95,8 @@ async function checkResult() {
             '</div>' +
             '<div class="res-divider"></div>' +
             '<div class="res-row"><div class="res-label">App. No.</div><div class="res-val">' + displayKey + '</div></div>' +
-            '<div class="res-row"><div class="res-label">Date</div><div class="res-val">' + payload.date + '</div></div>' +
-            '<div class="res-row"><div class="res-label">Time</div><div class="res-val">' + payload.time + '</div></div>' +
+            '<div class="res-row"><div class="res-label">Date</div><div class="res-val">' + displayDate + '</div></div>' +
+            '<div class="res-row"><div class="res-label">Time</div><div class="res-val">' + displayTime + '</div></div>' +
             '<div class="congrats-note">' +
               'You are qualified to apply for available degree programs. Please proceed to the confirmation venue on your scheduled confirmation date. Bring all required documents.' +
             '</div>' +
@@ -97,16 +122,16 @@ async function checkResult() {
       }
     } else {
       resultEl.innerHTML =
-        '<div class="result-box result-fail">' +
+        '<div class="result-box result-warning">' +
           '<div class="res-header">' +
-            '<div class="res-icon icon-fail">&#10675;</div>' +
+            '<div class="res-icon icon-warning">&#8505;</div>' +
             '<div class="res-header-text">' +
-              '<div class="res-tag res-tag-fail">NOT ON DPWAS LIST</div>' +
+              '<div class="res-tag res-tag-warning">NOT ON DPWAS LIST</div>' +
             '</div>' +
           '</div>' +
-          '<div class="res-divider-red"></div>' +
+          '<div class="res-divider-warning"></div>' +
           '<p class="advisory-text">Not on DPWAS List</p>' +
-          '<p class="advisory-text">Wait for the further announcement for reconsideration. You may visit the <a href="https://www.facebook.com/slsuMain" target="_blank" class="fb-link">SLSU Main FB Page</a> or <a href="https://www.facebook.com/SLSUAdmission" target="_blank" class="fb-link">SLSU Student Admission Office FB Page</a></p>' +
+          '<p class="advisory-text">Wait for the further announcement for reconsideration. You may visit the <a href="https://www.facebook.com/slsuMain" target="_blank" rel="noopener noreferrer" class="fb-link">SLSU Main FB Page</a> or <a href="https://www.facebook.com/SLSUAdmission" target="_blank" rel="noopener noreferrer" class="fb-link">SLSU Student Admission Office FB Page</a></p>' +
         '</div>';
     }
   } catch (err) {
