@@ -155,15 +155,14 @@ async function checkResult() {
             '<div class="res-header">' +
               '<div class="res-icon icon-info">&#10003;</div>' +
               '<div class="res-header-text">' +
-                '<div class="res-tag res-tag-info">&#10003; First Release Qualified</div>' +
-                '<h3 class="h3-info">Already Qualified!</h3>' +
+                '<div class="res-tag res-tag-info">&#10003; First Release Qualifier</div>' +
               '</div>' +
             '</div>' +
             '<div class="res-divider"></div>' +
             '<div class="res-row"><div class="res-label res-label-info">App. No.</div><div class="res-val">' + displayKey + '</div></div>' +
             '<div class="res-row"><div class="res-label res-label-info">1st Choice Program</div><div class="res-val program program-info">' + escapeHtml(displayProgram) + '</div></div>' +
             '<div class="congrats-note congrats-note-info">' +
-              'You are already in the First admission results and qualified for your 1st choice of Program.' +
+              'You are included in the first admission results and have qualified for your first-choice program.' +
             '</div>' +
           '</div>';
       }
