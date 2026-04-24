@@ -83,14 +83,32 @@ function formatDateString(value) {
 
 function formatTimeString(value) {
   var text = String(value || '').trim();
-  var match = text.match(/^(\d{1,2}):(\d{2})\s*([AaPp][Mm])$/);
-  if (match) {
+
+  function formatSingleTime(input) {
+    var t = String(input || '').trim().replace(/^from\s+/i, '');
+    var match = t.match(/^(\d{1,2})(?::(\d{2}))?\s*([AaPp][Mm])$/);
+    if (!match) return '';
     var hour = parseInt(match[1], 10);
-    var minute = match[2];
+    var minute = match[2] || '00';
     var period = match[3].toUpperCase();
     if (hour === 0) hour = 12;
     return (hour < 10 ? '0' : '') + hour + ':' + minute + ' ' + period;
   }
+
+  var range = text.match(/^\s*(.+?)\s*(?:to|-|–|—)\s*(.+?)\s*$/i);
+  if (range) {
+    var start = formatSingleTime(range[1]);
+    var end = formatSingleTime(range[2]);
+    if (start && end) {
+      return start + ' - ' + end;
+    }
+  }
+
+  var single = formatSingleTime(text);
+  if (single) {
+    return single;
+  }
+
   return text;
 }
 
