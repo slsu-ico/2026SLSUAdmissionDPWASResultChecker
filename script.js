@@ -83,10 +83,10 @@ async function checkResult() {
         resultEl.innerHTML =
           '<div class="result-box result-success">' +
             '<div class="res-header">' +
-              '<div class="res-icon icon-success">&#127881;</div>' +
+              '<div class="res-icon icon-success">&#10003;</div>' +
               '<div class="res-header-text">' +
-                '<div class="res-tag">&#10003; Qualified</div>' +
-                '<h3>Congratulations!</h3>' +
+                '<div class="res-tag">&#10003; First Release Qualified</div>' +
+                '<h3>Already Qualified!</h3>' +
               '</div>' +
             '</div>' +
             '<div class="res-divider"></div>' +
