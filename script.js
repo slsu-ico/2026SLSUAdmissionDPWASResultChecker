@@ -84,21 +84,27 @@ async function checkResult() {
       if (payload.type === 'dpwas') {
         var displayDate = formatDateString(payload.date);
         var displayTime = formatTimeString(payload.time);
+        var scheduleLabel = displayDate && displayTime
+          ? displayDate + ', from ' + displayTime
+          : 'your assigned schedule';
         resultEl.innerHTML =
           '<div class="result-box result-success">' +
             '<div class="res-header">' +
               '<div class="res-icon icon-success">&#127881;</div>' +
               '<div class="res-header-text">' +
-                '<div class="res-tag">&#10003; Qualified</div>' +
-                '<h3>Congratulations!</h3>' +
+                '<div class="res-tag">&#10003; DPWAS</div>' +
+                '<h3>Thank you!</h3>' +
               '</div>' +
             '</div>' +
             '<div class="res-divider"></div>' +
             '<div class="res-row"><div class="res-label">App. No.</div><div class="res-val">' + displayKey + '</div></div>' +
-            '<div class="res-row"><div class="res-label">Date</div><div class="res-val">' + displayDate + '</div></div>' +
-            '<div class="res-row"><div class="res-label">Time</div><div class="res-val">' + displayTime + '</div></div>' +
+            '<div class="res-row"><div class="res-label res-label-info">Date</div><div class="res-val program program-info">' + displayDate + '</div></div>' +
+            '<div class="res-row"><div class="res-label res-label-info">Time</div><div class="res-val program program-info">' + displayTime + '</div></div>' +
             '<div class="congrats-note">' +
-              'You are qualified to apply for available degree programs. Please proceed to the confirmation venue on your scheduled confirmation date. Bring all required documents.' +
+              'Thank you for your participation in the SLSU College Admissions 2026.<br><br>' +
+              'The slots in the degree program you applied for have already been filled. However, you have been placed on the waitlist under the Degree Program with Available Slots (DPWAS) category at SLSU Main Campus.<br><br>' +
+              'Your admission will depend on the availability of slots after the confirmation period, during which waitlisted applicants may be selected to fill vacated slots. Please note that being waitlisted under DPWAS does not guarantee admission to the university.<br><br>' +
+              'You are advised to report on ' + scheduleLabel + ' at the SLSU Gymnasium in Lucban, Quezon. Kindly bring all required documents and arrive at least 30 minutes early. Rescheduling will not be accommodated.' +
             '</div>' +
             '<p class="screenshot-note">Screenshot this as proof of your schedule.</p>' +
           '</div>';
