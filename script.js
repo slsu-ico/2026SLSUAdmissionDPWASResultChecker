@@ -1,0 +1,131 @@
+async function loadAllData() {
+  var statusEl = document.getElementById('dataStatus');
+  statusEl.innerHTML = '<div class="loading-bar"><div class="spinner"></div>Preparing secure DPWAS qualifier lookup&hellip;</div>';
+  try {
+    var res = await fetch('/api/search-result', { cache: 'no-store' });
+    var payload = await res.json();
+    if (!res.ok || !payload.ready) {
+      throw new Error(payload && payload.error ? payload.error : 'Secure lookup is not available.');
+    }
+    statusEl.innerHTML = '';
+    document.getElementById('appInput').disabled = false;
+    document.getElementById('checkBtn').disabled = false;
+    document.getElementById('appInput').focus();
+  } catch (err) {
+    statusEl.innerHTML = '<div class="error-bar">&#9888;&#65039; Could not load secure DPWAS qualifier data. ' + err.message + '<br>Please refresh the page or contact the admission office.</div>';
+  }
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function normalizeAppNo(value) {
+  return String(value || '')
+    .toUpperCase()
+    .replace(/[^A-Z0-9]/g, '');
+}
+
+async function checkResult() {
+  var raw = document.getElementById('appInput').value.trim();
+  var resultEl = document.getElementById('result');
+  var buttonEl = document.getElementById('checkBtn');
+
+  if (!raw) {
+    resultEl.innerHTML = '<div class="result-box result-fail"><p style="font-size:14px;color:#8b4513;">&#9888;&#65039; Please enter your Application Number before checking.</p></div>';
+    return;
+  }
+
+  var displayKey = raw.toUpperCase();
+  var lookupKey = normalizeAppNo(raw);
+
+  buttonEl.disabled = true;
+  buttonEl.textContent = 'Checking...';
+
+  try {
+    var response = await fetch('/api/search-result?q=' + encodeURIComponent(lookupKey), {
+      cache: 'no-store'
+    });
+    var payload = await response.json();
+
+    if (!response.ok) {
+      throw new Error(payload && payload.error ? payload.error : 'Lookup failed.');
+    }
+
+    if (payload.found) {
+      if (payload.type === 'dpwas') {
+        resultEl.innerHTML =
+          '<div class="result-box result-success">' +
+            '<div class="res-header">' +
+              '<div class="res-icon icon-success">&#127881;</div>' +
+              '<div class="res-header-text">' +
+                '<div class="res-tag">&#10003; Qualified</div>' +
+                '<h3>Congratulations!</h3>' +
+              '</div>' +
+            '</div>' +
+            '<div class="res-divider"></div>' +
+            '<div class="res-row"><div class="res-label">App. No.</div><div class="res-val">' + displayKey + '</div></div>' +
+            '<div class="res-row"><div class="res-label">Date</div><div class="res-val">' + payload.date + '</div></div>' +
+            '<div class="res-row"><div class="res-label">Time</div><div class="res-val">' + payload.time + '</div></div>' +
+            '<div class="congrats-note">' +
+              'You are qualified to apply for available degree programs. Please proceed to the confirmation venue on your scheduled confirmation date. Bring all required documents.' +
+            '</div>' +
+            '<div class="screenshot-note">' +
+              'Screenshot this as proof of your schedule.' +
+            '</div>' +
+          '</div>';
+      } else if (payload.type === 'first_release') {
+        resultEl.innerHTML =
+          '<div class="result-box result-success">' +
+            '<div class="res-header">' +
+              '<div class="res-icon icon-success">&#127881;</div>' +
+              '<div class="res-header-text">' +
+                '<div class="res-tag">&#10003; Qualified</div>' +
+                '<h3>Congratulations!</h3>' +
+              '</div>' +
+            '</div>' +
+            '<div class="res-divider"></div>' +
+            '<div class="res-row"><div class="res-label">App. No.</div><div class="res-val">' + displayKey + '</div></div>' +
+            '<div class="res-row"><div class="res-label">1st Choice Program</div><div class="res-val program">' + payload.program + '</div></div>' +
+            '<div class="congrats-note">' +
+              'You are already in the First admission results and qualified for your 1st choice of Program.' +
+            '</div>' +
+          '</div>';
+      }
+    } else {
+      resultEl.innerHTML =
+        '<div class="result-box result-fail">' +
+          '<div class="res-header">' +
+            '<div class="res-icon icon-fail">&#10069;</div>' +
+            '<div class="res-header-text">' +
+              '<div class="res-tag res-tag-fail">NOT ON DPWAS LIST</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="res-divider-red"></div>' +
+          '<p class="advisory-text">Not on DPWAS List</p>' +
+          '<p class="advisory-text">Wait for the further announcement for reconsideration. You may visit the SLSU Main FB Page or SLSU Student Admission Office FB Page</p>' +
+        '</div>';
+    }
+  } catch (err) {
+    resultEl.innerHTML = '<div class="result-box result-fail"><p style="font-size:14px;color:#8b4513;">&#9888;&#65039; ' + escapeHtml(err.message) + '</p></div>';
+  } finally {
+    buttonEl.disabled = false;
+    buttonEl.innerHTML = '<span class="btn-shine"></span>Check My Status';
+  }
+
+  resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function switchTab(btn, tab) {
+  document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+  document.getElementById('tab-' + tab).classList.add('active');
+  btn.classList.add('active');
+}
+
+loadAllData();

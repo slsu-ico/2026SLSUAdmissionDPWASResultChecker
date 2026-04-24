@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SLSU DPWAS Qualifier Checker | A.Y. 2026–2027</title>
+<script>
+if (/github\.io$/i.test(window.location.hostname)) {
+  var repoPrefix = '/2026SLSUAdmissionResultChecker';
+  var nextPath = window.location.pathname.indexOf(repoPrefix) === 0
+    ? window.location.pathname.slice(repoPrefix.length)
+    : window.location.pathname;
+  window.location.replace('https://2026-slsu-admission-result-checker.vercel.app' + nextPath + window.location.search + window.location.hash);
+}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo-ring"><img src="SLSU Logo with outline.png" alt="SLSU Logo"></div>
+    <div class="header-copy">
+      <div class="header-text">
+        <h1>SLSU DPWAS<br>Qualifier Checker</h1>
+        <p>Southern Luzon State University &middot; Lucban, Quezon</p>
+        <div class="header-year">A.Y. 2026&ndash;2027</div>
+      </div>
+      <div class="header-brand">
+        <div class="header-campaign" aria-label="#YES4SLSU campaign tag">#YES<span class="header-campaign-accent">4</span>SLSU</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="ticker-wrap">
+  <div class="ticker-inner">
+    <span>&#128226; DPWAS Qualifier Results for A.Y. 2026&ndash;2027 are now available!</span>
+    <span>&#128197; Confirmation of Slots: April 20&ndash;23, 2026</span>
+    <span>&#128248; Wear plain white shirt and maong pants during confirmation</span>
+    <span>&#128203; Bring all required documents &mdash; original report card or academic records must be presented on confirmation day</span>
+    <span>&#128226; DPWAS Qualifier Results for A.Y. 2026&ndash;2027 are now available!</span>
+    <span>&#128197; Confirmation of Slots: April 20&ndash;23, 2026</span>
+    <span>&#128248; Wear plain white shirt and maong pants during confirmation</span>
+    <span>&#128203; Bring all required documents &mdash; original report card or academic records must be presented on confirmation day</span>
+  </div>
+</div>
+
+<main>
+  <div class="checker-card">
+    <h2>Check Your DPWAS Status</h2>
+    <p class="subtitle">Enter your Application Number as indicated on your Examination Permit to view your DPWAS qualifier status.</p>
+
+    <div id="dataStatus"></div>
+
+    <div class="field-group">
+      <label>Application / Examinee Number</label>
+      <div class="input-wrap">
+        <input type="text" id="appInput" placeholder="e.g. 2026-00001" maxlength="20"
+          oninput="this.value=this.value.toUpperCase()"
+          onkeydown="if(event.key==='Enter') checkResult()"
+          disabled>
+        <span class="input-icon">&#128269;</span>
+      </div>
+    </div>
+
+    <button class="check-btn" id="checkBtn" onclick="checkResult()" disabled>
+      <span class="btn-shine"></span>
+      Check My Status
+    </button>
+
+    <div id="result"></div>
+  </div>
+
+  <p class="section-title">Information &amp; Reminders</p>
+  <p class="section-sub">Important details for qualified applicants proceeding to confirmation of slots.</p>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab(this,'reminders')">&#128204; Reminders</button>
+    <button class="tab-btn" onclick="switchTab(this,'schedule')">&#128197; Schedule</button>
+    <button class="tab-btn" onclick="switchTab(this,'requirements')">&#128203; Requirements</button>
+    <button class="tab-btn" onclick="switchTab(this,'medical')">&#129514; Medical Exams</button>
+    <button class="tab-btn" onclick="switchTab(this,'faq')">&#10067; FAQs</button>
+  </div>
+
+  <div id="tab-reminders" class="tab-panel active">
+    <div class="info-card">
+      <h4><span>&#128204;</span> Important Reminders</h4>
+      <ol class="reminder-list">
+        <li>College applicants must pass the interview, laboratory examination (for specific programs), and other admission requirements to proceed with the confirmation process.</li>
+        <li><strong>Incomplete requirements will be processed provided that primary documents such as original report card or academic records are presented on the day of confirmation.</strong> Qualifiers should bring the following requirements:
+          <ol class="sub-reminder-list">
+            <li>Examination Permit (duly signed by the test administrator)</li>
+            <li>Long White Folders (2 pcs)</li>
+            <li>Black Ballpen</li>
+            <li>2x2 Picture with nametag and White background (4 pcs)</li>
+            <li>Original and Photocopy of Birth Certificate from PSA</li>
+            <li>Original and Photocopy of Good Moral Character</li>
+            <li>Original and Photocopy of Police Clearance</li>
+            <li>Original and Photocopy of Academic Records
+              <ol class="sub-sub-reminder-list">
+                <li>Grade 12 Report Card</li>
+                <li>Transcript of Records (For Transferees)</li>
+                <li>ALS Certification of rating qualified for College Admission</li>
+              </ol>
+            </li>
+          </ol>
+        </li>
+        <li>College applicants are <strong>required to wear a plain white shirt and maong pants</strong> during slot confirmation.</li>
+        <li>The Student Admission Staff will distribute queuing numbers starting at 7:00 AM at SLSU Gate 1.</li>
+        <li><strong>No reservation fees</strong> are to be collected to confirm the admission slot.</li>
+        <li>Applicants who require a companion may bring only one (1) person inside the premises.</li>
+        <li>Applicants for BS Nursing, BS Radiologic Technology, BS Midwifery, BS Accountancy, BS Hospitality Management, BA Psychology, and College of Agriculture are <strong>required to be accompanied</strong> by a parent or guardian for a short program orientation.</li>
+        <li>Non-appearance on the given schedule means forfeiture of the admission slot. Qualifiers who are unable to attend their scheduled date with valid reasons, such as transportation difficulties, medical concerns, or other justifiable circumstances, <strong>may report to the confirmation venue on April 27 and 28, 2026, only.</strong></li>
+        <li>In case a program reaches its quota, qualified applicants may still apply for reconsideration in programs with available slots. However, reconsideration is still subject to approval and the availability of slots.</li>
+        <li><strong>Only qualified applicants will be entertained.</strong></li>
+        <li>Practice CLAYGO before leaving the confirmation venue.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div id="tab-schedule" class="tab-panel">
+    <div class="info-card">
+      <h4><span>&#128197;</span> Confirmation Schedule (Qualifiers)</h4>
+      <div class="schedule-grid">
+        <div class="sched-date">April 20, 2026</div><div class="sched-college">College of Engineering</div>
+        <div class="sched-date">April 21, 2026</div><div class="sched-college">College of Agriculture<br>College of Administration, Business, Hospitality and Accountancy</div>
+        <div class="sched-date">April 22, 2026</div><div class="sched-college">College of Allied Medicine<br>College of Teacher Education</div>
+        <div class="sched-date no-border">April 23, 2026</div><div class="sched-college no-border">College of Industrial Technology<br>College of Arts and Sciences</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-requirements" class="tab-panel">
+    <div class="info-card">
+      <h4><span>&#128203;</span> General Admission Requirements</h4>
+      <div class="req-grid">
+        <div class="req-item">Examination Permit (duly signed by test administrator)</div>
+        <div class="req-item">Long White Folders (2 pcs)</div>
+        <div class="req-item">Black Ballpen</div>
+        <div class="req-item">2x2 Picture with nametag, white background (4 pcs)</div>
+        <div class="req-item">Original &amp; Photocopy &mdash; Birth Certificate from PSA</div>
+        <div class="req-item">Original &amp; Photocopy &mdash; Good Moral Character</div>
+        <div class="req-item">Original &amp; Photocopy &mdash; Police Clearance</div>
+        <div class="req-item">Original &amp; Photocopy &mdash; Academic Records</div>
+        <div class="req-item">Grade 12 Report Card</div>
+        <div class="req-item">Transcript of Records (For Transferees)</div>
+        <div class="req-item">ALS Certification of Rating qualified for College Admission</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-medical" class="tab-panel">
+    <div class="info-card">
+      <h4><span>&#129514;</span> Additional Medical Laboratory Examination Results</h4>
+      <table class="med-table">
+        <thead><tr><th>Program</th><th>Required Tests</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Bachelor of Science in Nursing<br>Bachelor of Science in Radiologic Technology<br>Bachelor of Science in Midwifery</td>
+            <td>&bull; Chest X-Ray<br>&bull; CBC<br>&bull; Hepa B Screening (HBSAg, Anti-HBS, Anti-HBc)</td>
+          </tr>
+          <tr>
+            <td>Bachelor of Science in Hospitality Management<br>Bachelor of Industrial Technology major in Culinary Technology</td>
+            <td>&bull; Chest X-Ray<br>&bull; Hepa B Screening (HBSAg, Anti-HBS, Anti-HBc)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="tab-faq" class="tab-panel">
+    <div class="info-card">
+      <h4><span>&#10067;</span> Frequently Asked Questions</h4>
+      <div class="faq-item">
+        <p class="faq-q">Does the posted admission result include all SLSU campuses?</p>
+        <p class="faq-a">No. Results for the Main Campus are posted first, followed by Satellite Campuses after all their exams and evaluations are completed.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">How will I know if I am admitted to the program I applied for?</p>
+        <p class="faq-a">Check the official Facebook page and the SLSU website for the list of qualifiers or waiting lists for degree programs with available slots (DPWAS).</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">What if my examinee number is not on the qualifiers or DPWAS lists?</p>
+        <p class="faq-a">You may apply for reconsideration, subject to approval and slot availability. Follow the instructions on the official Facebook page and visit the Admission Office on the scheduled date.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">Can I change or shift my course if I am in DPWAS or reconsideration?</p>
+        <p class="faq-a">No. Applicants must sign a waiver stating they waive the right to shift to any other program offered by the university.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">I missed the confirmation schedule. Can I still confirm my slot beyond my schedule?</p>
+        <p class="faq-a">Qualifiers who are unable to attend their scheduled date for valid reasons, such as transportation difficulties, medical concerns, or other justifiable circumstances, may report to the confirmation venue on <strong>April 27 and 28, 2026 only</strong>. For DPWAS applicants, missing the confirmation schedule forfeits the slot, but you may still report during reconsideration dates for programs with available slots.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">If I did not confirm my slot, can I recommend someone to replace me?</p>
+        <p class="faq-a">No. Slots are forfeited and given to the next qualified applicant. Replacement recommendations are not allowed.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">How will I be notified of the confirmation schedule?</p>
+        <p class="faq-a">Confirmation schedules will be posted on the Facebook page of Southern Luzon State University Main Campus and on the SLSU website.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">Can I confirm and enroll in an SLSU Satellite Campus if I took my entrance exam at the Main Campus?</p>
+        <p class="faq-a">Yes. You may apply for reconsideration during the Satellite Campus reconsideration dates.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">Can I still confirm my slot if some confirmation requirements are incomplete?</p>
+        <p class="faq-a">Yes, but your original report card or academic record must be presented on the day of confirmation.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">What is the process of slot confirmation in the program I applied to?</p>
+        <p class="faq-a"><strong>If Qualifier:</strong> Report on the date of confirmation scheduled per program and submit all requirements for confirmation of slots.<br><strong>If listed on DPWAS:</strong> Access, download, and fill out the reconsideration form and waiver form for admission with the signature of the parent; report on the date of confirmation set by the Student Admission Office; and submit all requirements for confirmation of slots.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">Are there any reservation fees or any other fees that I need to pay upon confirmation of my slot?</p>
+        <p class="faq-a">None. There are no fees to be collected to confirm your slot.</p>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <img class="footer-office-logo" src="ICO_Logo_White_bg.png" alt="SLSU ICO Logo"><br>
+  <div class="footer-mantra">Empowering people, ensuring a sustainable future</div>
+  <strong>Design & Develop by SLSU Information and Communications Office</strong><br>
+  <strong>Data provided by SLSU Student Admission Office</strong><br>
+  Southern Luzon State University &middot; Lucban, Quezon, Philippines<br>
+  <span class="footer-contact-line">&#128241; <span class="footer-contact-label">SMART:</span> 09512179881 <span class="footer-contact-sep">|</span> <span class="footer-contact-label">GLOBE:</span> 09055224341</span><br>
+  &#9993;&#65039; <a href="mailto:admission@slsu.edu.ph">admission@slsu.edu.ph</a> &nbsp;|&nbsp;
+  &#127760; <a href="https://www.slsu.edu.ph" target="_blank">www.slsu.edu.ph</a>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
