@@ -173,11 +173,11 @@ async function checkResult() {
           '<div class="res-header">' +
             '<div class="res-icon icon-warning">&#8505;</div>' +
             '<div class="res-header-text">' +
-              '<div class="res-tag res-tag-warning">NOT ON DPWAS LIST</div>' +
+              '<div class="res-tag res-tag-warning">NOT ON THE DPWAS LIST</div>' +
             '</div>' +
           '</div>' +
           '<div class="res-divider-warning"></div>' +
-          '<p class="advisory-text">Wait for the further announcement for reconsideration. You may visit the <a href="https://www.facebook.com/slsuMain" target="_blank" rel="noopener noreferrer" class="fb-link">SLSU Main FB Page</a> or <a href="https://www.facebook.com/SLSUAdmission" target="_blank" rel="noopener noreferrer" class="fb-link">SLSU Student Admission Office FB Page</a></p>' +
+          '<p class="advisory-text">Thank you for your interest in SLSU. Although you are not included in the DPWAS list at this time, other opportunities such as reconsideration may still be available.<br><br>Please stay tuned for further announcements through the official Facebook pages of <a href="https://www.facebook.com/slsuMain" target="_blank" rel="noopener noreferrer" class="fb-link">SLSU Main</a> or the <a href="https://www.facebook.com/SLSUAdmission" target="_blank" rel="noopener noreferrer" class="fb-link">SLSU Student Admission Office</a>.</p>' +
         '</div>';
     }
   } catch (err) {
