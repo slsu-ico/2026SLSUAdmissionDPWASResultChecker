@@ -75,9 +75,7 @@ async function checkResult() {
             '<div class="congrats-note">' +
               'You are qualified to apply for available degree programs. Please proceed to the confirmation venue on your scheduled confirmation date. Bring all required documents.' +
             '</div>' +
-            '<div class="screenshot-note">' +
-              'Screenshot this as proof of your schedule.' +
-            '</div>' +
+            '<p class="screenshot-note">Screenshot this as proof of your schedule.</p>' +
           '</div>';
       } else if (payload.type === 'first_release') {
         resultEl.innerHTML =
